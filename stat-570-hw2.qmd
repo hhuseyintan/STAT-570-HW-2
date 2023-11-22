@@ -1,0 +1,106 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+## 
+
+## 15.6 Practice
+
+```{r}
+library(babynames) 
+library(tidyverse)
+```
+
+Hello guys, so far we learn some useful functions. So let's do some practice !
+
+In the first example I want to select all sentences start with ''The'' article. We can do that with \^ anchor.
+
+Our code is
+
+```{r}
+str_view(sentences,"^The")
+```
+
+we can see that the pattern also match another sentectes like 'These'. To fix this problem we need to ensure that the letter 'e' is the last letter in the word."
+
+If we add boundary to the pattern it will work.
+
+So, our code like this:
+
+```{r}
+str_view(sentences,"^The\\b")
+```
+
+All sentences start with 'The' article.
+
+Also we can write this code add boundary to both sides of the pattern.
+
+So, our code like this:
+
+```{r}
+str_view(sentences,"\\bThe\\b")
+```
+
+But we couldn't do this if our sentences data were all lowercase letters.
+
+I can give you a simple example
+
+This is our example data
+
+```{r}
+example <- c("statistics are the best","the mean of sample is a statistic")
+```
+
+```{r}
+str_view(example,"\\bthe\\b")
+```
+
+Again ı want sentences start with 'the' article but this time code select correct one and also select wrong one. Boundary does not make any limitation like anchor.
+
+So, what can we do if we want to select all sentences begin with a pronoun
+
+Our code like this:
+
+```{r}
+str_view(sentences,"^She|He|It|They\\b")
+```
+
+Similar to first example our code match another sentences like 'Help'. If we add parantheses we can fix the problem. It is similar to multiplication in math.
+
+```{r}
+str_view(sentences,"^(She|He|It|They)\\b")
+```
+
+We can notice the mistakes we made because we see them in the first parts of the data.If this does not happen, we can check our code by creating a test set.
+
+```{r}
+pos <- c("He is a boy","She had a good time") 
+neg <- c("Shells come from the sea","Headley said 'It's a great day'") 
+pattern <- "^(She|He|It|They)\\b"
+```
+
+```{r}
+str_detect(pos,pattern)  
+```
+
+In the first code we expect TRUE value.
+
+```{r}
+str_detect(neg,pattern)
+```
+
+And the second one we expect FALSE value
+
+Also You use this code to check
+
+```{r}
+str_view(pos,pattern)
+```
+
+```{r}
+str_view(neg,pattern)
+```
+
+so our pattern works as expected!
